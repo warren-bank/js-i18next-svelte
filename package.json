@@ -1,0 +1,26 @@
+{
+  "name": "@warren-bank/i18next-svelte",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "src/index.js",
+  "description": "Svelte wrapper for i18next",
+  "license": "GPL-2.0",
+  "author": {
+    "name": "Warren R. Bank",
+    "email": "warren.r.bank@gmail.com",
+    "url": "https://github.com/warren-bank"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/warren-bank/js-i18next-svelte"
+  },
+  "peerDependencies": {
+    "i18next": "*",
+    "svelte": "*"
+  },
+  "keywords": [
+    "i18n",
+    "i18next",
+    "svelte"
+  ]
+}
