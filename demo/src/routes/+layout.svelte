@@ -10,9 +10,12 @@
 
   let lang = null
 
-  $: if (!lang && $i18n && !$isLoading.init) lang = $i18n.language
-
-  $: if (lang && $i18n && !$isLoading.init && (lang !== $i18n.language)) load.changeLanguage(lang);
+  $:  if ($i18n && !$isLoading.init) {
+        if (!lang)
+          lang = $i18n.language
+        else if (lang !== $i18n.language)
+          load.changeLanguage(lang)
+      }
 </script>
 
 <svelte:head>
@@ -27,8 +30,8 @@
   <h1>Error!</h1>
 {:else}
   <div class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg p-2.5 fixed right-4 top-2 z-50">
-    <Select class="text-sm focus:outline-none inline w-fit max-w-fit mr-2.5" items={data.all_languages.map(lang => ({value: lang[0], name: lang[1]}))} bind:value={lang} />
-    <DarkMode />
+    <Select class="inline align-middle text-sm focus:outline-none w-max mr-2.5" items={data.all_languages.map(lang => ({value: lang[0], name: lang[1]}))} bind:value={lang} />
+    <DarkMode btnClass="inline align-middle text-sm focus:outline-none rounded-lg p-2.5" />
   </div>
 
   <slot />
