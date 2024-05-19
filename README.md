@@ -19,18 +19,19 @@
   - `i18n`
     * is a store that holds an initialized instance of [i18next](https://github.com/i18next/i18next)
   - `isLoading`
-    * is a store that holds an object: `{init, changeLanguage, loadNamespaces}`
+    * is a store that holds an object:<br>`{init, changeLanguage, loadLanguages, loadNamespaces, loadResources, reloadResources}`
     * each object key stores a _boolean_
     * each _boolean_ indicates whether or not the corresponding `load` method is currently running
   - `isError`
-    * is a store that holds an object: `{init, changeLanguage, loadNamespaces}`
+    * is a store that holds an object:<br>`{init, changeLanguage, loadLanguages, loadNamespaces, loadResources, reloadResources}`
     * each object key stores a _boolean_
     * each _boolean_ indicates whether or not the corresponding `load` method has completed running with an error
   - `load`
     * is __not__ a store
-    * is an object: `{init, changeLanguage, loadNamespaces}`
+    * is an object:<br>`{init, changeLanguage, loadLanguages, loadNamespaces, loadResources, reloadResources}`
     * each object key stores a _function_
     * each _function_ is a wrapper around a method that would normally be called on an initialized instance of [i18next](https://github.com/i18next/i18next)
+      - the return value is unchanged
     * each wrapper should be used instead
       - it delegates the call to the initialized instance of [i18next](https://github.com/i18next/i18next) held by the store: `i18n`
       - it manages the state of stores: `isLoading` and `isError`

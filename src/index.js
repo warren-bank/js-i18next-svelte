@@ -4,15 +4,21 @@ let   i18next = null
 const i18n    = writable(null)
 
 const isLoading = writable({
-  init:           false,
-  changeLanguage: false,
-  loadNamespaces: false
+  init:            false,
+  changeLanguage:  false,
+  loadLanguages:   false,
+  loadNamespaces:  false,
+  loadResources:   false,
+  reloadResources: false
 })
 
 const isError = writable({
-  init:           false,
-  changeLanguage: false,
-  loadNamespaces: false
+  init:            false,
+  changeLanguage:  false,
+  loadLanguages:   false,
+  loadNamespaces:  false,
+  loadResources:   false,
+  reloadResources: false
 })
 
 const updateStoreKey = (store, key, val) => {
@@ -37,6 +43,7 @@ const verify_init = () => {
     throw new Error('did not call: init(i18next, options, callback)')
 }
 
+// return: Promise
 const init = (_i18next, options, cb) => {
   updateStoreKey(isLoading, 'init', true)
   updateStoreKey(isError,   'init', false)
@@ -46,6 +53,7 @@ const init = (_i18next, options, cb) => {
   return i18next.init(options, genericCallback.bind(null, 'init', cb))
 }
 
+// return: Promise
 const changeLanguage = (lng, cb) => {
   verify_init()
 
@@ -55,6 +63,17 @@ const changeLanguage = (lng, cb) => {
   return i18next.changeLanguage(lng, genericCallback.bind(null, 'changeLanguage', cb))
 }
 
+// return: Promise
+const loadLanguages = (lngs, cb) => {
+  verify_init()
+
+  updateStoreKey(isLoading, 'loadLanguages', true)
+  updateStoreKey(isError,   'loadLanguages', false)
+
+  return i18next.loadLanguages(lngs, genericCallback.bind(null, 'loadLanguages', cb))
+}
+
+// return: Promise
 const loadNamespaces = (ns, cb) => {
   verify_init()
 
@@ -64,10 +83,33 @@ const loadNamespaces = (ns, cb) => {
   return i18next.loadNamespaces(ns, genericCallback.bind(null, 'loadNamespaces', cb))
 }
 
+// return: undefined
+const loadResources = (language, cb) => {
+  verify_init()
+
+  updateStoreKey(isLoading, 'loadResources', true)
+  updateStoreKey(isError,   'loadResources', false)
+
+  return i18next.loadResources(language, genericCallback.bind(null, 'loadResources', cb))
+}
+
+// return: Promise
+const reloadResources = (lngs, ns, cb) => {
+  verify_init()
+
+  updateStoreKey(isLoading, 'reloadResources', true)
+  updateStoreKey(isError,   'reloadResources', false)
+
+  return i18next.reloadResources(lngs, ns, genericCallback.bind(null, 'reloadResources', cb))
+}
+
 const load = {
   init,
   changeLanguage,
-  loadNamespaces
+  loadLanguages,
+  loadNamespaces,
+  loadResources,
+  reloadResources
 }
 
 export {
