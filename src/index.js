@@ -22,6 +22,16 @@ const updateStoreKey = (store, key, val) => {
   })
 }
 
+const genericCallback = (storeKey, userCallback, error, ...args) => {
+  updateStoreKey(isError,   storeKey, !!error)
+  updateStoreKey(isLoading, storeKey, false)
+
+  i18n.set(i18next)
+
+  if (userCallback && (typeof userCallback === 'function'))
+    userCallback(error, ...args)
+}
+
 const verify_init = () => {
   if (!i18next)
     throw new Error('did not call: init(i18next, options, callback)')
@@ -33,14 +43,7 @@ const init = (_i18next, options, cb) => {
 
   i18next = _i18next
 
-  return i18next.init(options, function(error, t) {
-    updateStoreKey(isError,   'init', !!error)
-    updateStoreKey(isLoading, 'init', false)
-
-    i18n.set(i18next)
-
-    if (cb) cb(error, t)
-  })
+  return i18next.init(options, genericCallback.bind(null, 'init', cb))
 }
 
 const changeLanguage = (lng, cb) => {
@@ -49,14 +52,7 @@ const changeLanguage = (lng, cb) => {
   updateStoreKey(isLoading, 'changeLanguage', true)
   updateStoreKey(isError,   'changeLanguage', false)
 
-  return i18next.changeLanguage(lng, function(error, t) {
-    updateStoreKey(isError,   'changeLanguage', !!error)
-    updateStoreKey(isLoading, 'changeLanguage', false)
-
-    i18n.set(i18next)
-
-    if (cb) cb(error, t)
-  })
+  return i18next.changeLanguage(lng, genericCallback.bind(null, 'changeLanguage', cb))
 }
 
 const loadNamespaces = (ns, cb) => {
@@ -65,14 +61,7 @@ const loadNamespaces = (ns, cb) => {
   updateStoreKey(isLoading, 'loadNamespaces', true)
   updateStoreKey(isError,   'loadNamespaces', false)
 
-  return i18next.loadNamespaces(ns, function(error, t) {
-    updateStoreKey(isError,   'loadNamespaces', !!error)
-    updateStoreKey(isLoading, 'loadNamespaces', false)
-
-    i18n.set(i18next)
-
-    if (cb) cb(error, t)
-  })
+  return i18next.loadNamespaces(ns, genericCallback.bind(null, 'loadNamespaces', cb))
 }
 
 const load = {
