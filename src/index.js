@@ -33,7 +33,7 @@ const init = (_i18next, options, cb) => {
 
   i18next = _i18next
 
-  i18next.init(options, function(error, t) {
+  return i18next.init(options, function(error, t) {
     updateStoreKey(isError,   'init', !!error)
     updateStoreKey(isLoading, 'init', false)
 
@@ -49,7 +49,7 @@ const changeLanguage = (lng, cb) => {
   updateStoreKey(isLoading, 'changeLanguage', true)
   updateStoreKey(isError,   'changeLanguage', false)
 
-  i18next.changeLanguage(lng, function(error, t) {
+  return i18next.changeLanguage(lng, function(error, t) {
     updateStoreKey(isError,   'changeLanguage', !!error)
     updateStoreKey(isLoading, 'changeLanguage', false)
 
@@ -65,7 +65,7 @@ const loadNamespaces = (ns, cb) => {
   updateStoreKey(isLoading, 'loadNamespaces', true)
   updateStoreKey(isError,   'loadNamespaces', false)
 
-  i18next.loadNamespaces(ns, function(error, t) {
+  return i18next.loadNamespaces(ns, function(error, t) {
     updateStoreKey(isError,   'loadNamespaces', !!error)
     updateStoreKey(isLoading, 'loadNamespaces', false)
 
