@@ -45,12 +45,20 @@ const verify_init = () => {
 
 // return: Promise
 const init = (_i18next, options, cb) => {
-  updateStoreKey(isLoading, 'init', true)
-  updateStoreKey(isError,   'init', false)
+  if (!i18next) {
+    updateStoreKey(isLoading, 'init', true)
+    updateStoreKey(isError,   'init', false)
 
-  i18next = _i18next
+    i18next = _i18next
 
-  return i18next.init(options, genericCallback.bind(null, 'init', cb))
+    return i18next.init(options, genericCallback.bind(null, 'init', cb))
+  }
+  else {
+    if (cb && (typeof cb === 'function'))
+      cb(null, i18next.t)
+
+    return Promise.resolve(i18next.t)
+  }
 }
 
 // return: Promise
